@@ -99,12 +99,12 @@ complete `Dockerfile`. In such cases, you can run a Node.js script by using the
 Node.js Docker image directly:
 
 ```console
-$ docker run -it --rm --name my-running-script -v "$PWD":/usr/src/app -w /usr/src/app node:4 node your-daemon-or-script.js
+$ docker run -it --rm --name my-running-script -v "$PWD":/usr/src/app -w /usr/src/app node:8 node your-daemon-or-script.js
 ```
 
 ## Verbosity
 
-Prior to 8.7.0, 6.11.4 and 4.8.4 the docker images overrode the default npm log
+Prior to 8.7.0 and 6.11.4 the docker images overrode the default npm log
 level from `warn` to `info`. However due to improvements to npm and new Docker
 patterns (e.g. multi-stage builds) the working group reached a [consensus](https://github.com/nodejs/docker-node/issues/528)
 to revert the log level to npm defaults. If you need more verbose output, please
@@ -268,15 +268,15 @@ about the expectations for all contributors to this project.
 
 ## Docker Working Group Members
 
- * Christopher Horrell ([chorrell](https://github.com/chorrell))
- * Hans Kristian Flaatten ([starefossen](https://github.com/starefossen))
- * Hugues Malphettes ([hmalphettes](https://github.com/hmalphettes))
- * John Mitchell ([jlmitch5](https://github.com/jlmitch5))
- * Peter Petrov ([pesho](https://github.com/pesho))
+  * Christopher Horrell ([chorrell](https://github.com/chorrell))
+  * Hans Kristian Flaatten ([starefossen](https://github.com/starefossen))
+  * Hugues Malphettes ([hmalphettes](https://github.com/hmalphettes))
+  * John Mitchell ([jlmitch5](https://github.com/jlmitch5))
+  * Peter Petrov ([pesho](https://github.com/pesho))
 
 ## Docker Working Group Collaborators
 
- * Mikeal Rogers ([mikeal](https://github.com/mikeal))
- * Laurent Goderre ([LaurentGoderre](https://github.com/LaurentGoderre))
- * Simen Bekkhus ([SimenB](https://github.com/SimenB))
- * Peter Dave Hello ([PeterDaveHello](https://github.com/PeterDaveHello))
+  * Mikeal Rogers ([mikeal](https://github.com/mikeal))
+  * Laurent Goderre ([LaurentGoderre](https://github.com/LaurentGoderre))
+  * Simen Bekkhus ([SimenB](https://github.com/SimenB))
+  * Peter Dave Hello ([PeterDaveHello](https://github.com/PeterDaveHello))

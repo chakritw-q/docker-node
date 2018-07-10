@@ -40,7 +40,8 @@ ENV YARN_VERSION 1.5.1
 
 RUN curl -fSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" \
     && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/ \
-    && ln -snf /opt/yarn-v$YARN_VERSION /opt/yarn \
+    && ln -snf /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
+    && ln -snf /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
     && rm yarn-v$YARN_VERSION.tar.gz
 ```
 
@@ -104,7 +105,7 @@ RUN deluser --remove-home node \
 
 ## Memory
 
-By default, any Docker Container may consume as much of the hardware such as CPU and RAM. If you are running multiple containers on the same host you should limit how much memory they can consume.     
+By default, any Docker Container may consume as much of the hardware such as CPU and RAM. If you are running multiple containers on the same host you should limit how much memory they can consume.
 
 ```
 -m "300M" --memory-swap "1G"

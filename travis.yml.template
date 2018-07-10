@@ -5,10 +5,6 @@ language: generic
 
 services:
     - docker
-addons:
-  apt:
-    packages:
-      - docker-ce
 
 script: ./test-build.sh $NODE_VERSION $VARIANT
 
@@ -16,14 +12,38 @@ stages:
   - Test
   - Build
   - name: Deploy
-    if: branch = build-test AND type IN (push)
+    if: branch = master AND type IN (push)
 
 jobs:
   include:
     - stage: Test
       env:
+        - TEST: Markdown link check
+      language: node_js
+      node_js:
+        - lts/*
+      install:
+        - npm i -g markdown-link-check
+      script:
+        - find . -name "*.md" -exec markdown-link-check {} \;
+
+    - stage: Test
+      env:
+        - TEST: Editor Config check
+      language: node_js
+      node_js:
+        - lts/*
+      install:
+        - npm i -g eclint
+      script:
+        - eclint check
+
+    - stage: Test
+      env:
         - TEST: Doc Toc Check
       language: node_js
+      node_js:
+        - lts/*
       install: npm i -g doctoc
       script:
         - cp README.md README.md.tmp &&
@@ -32,18 +52,26 @@ jobs:
 
     - stage: Test
       env:
+        - TEST: shfmt check
+      script:
+        - docker run -it --rm -v "$(pwd)":/sh -w /sh jamesmstone/shfmt@sha256:4eff05b54e87c11e8214848de3e5f4bb47a4241b99ac5c6554db5cc164015810 -i 2 -l -w -ci .
+        - git diff --color
+        - git diff --stat=220 --color --exit-code
+
+    - stage: Test
+      env:
         - TEST: Shell Check
       script: shellcheck *.sh
-      addons:
-        apt:
-          sources:
-            - debian-sid
-          packages:
-            - shellcheck
+
+    - stage: Test
+      env:
+        - TEST: .travis.yml and travis.yml.template consistency
+      language: generic
+      script:
+        - ./update.sh
+        - git diff --stat --exit-code .travis.yml
 
     - stage: Deploy
       script: ./generate-stackbrew-pr.sh
-      env:
-        secure: "HkgYgawkr/hkg2vURHGOb/JmF6U1e71QQsd0HXJ1UJh6WBiFJOrjomCMHZGHnpyopdRna++up8dISBqM2X+EiLAr9yWdRXy72oMP9X42M0ccnja/3E5KYYXMkETS50JnUhMCOt2xRZW5/ojqrHukqRo0YIjIu+P0U0VsZ4QIsng="
 
     # Docker Build #
