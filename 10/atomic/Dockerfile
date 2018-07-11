@@ -1,10 +1,6 @@
 FROM registry.access.redhat.com/rhel7-atomic:latest
 MAINTAINER chakrit_w@icloud.com
 
-RUN groupadd docker \
-    && useradd -r -u 1001 -g docker docker \
-    && echo '%docker ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
-
 RUN microdnf update
 # && microdnf check-update --security
 
@@ -32,6 +28,10 @@ RUN curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.re
 
 RUN microdnf clean all
     
+RUN groupadd docker \
+    && useradd -r -u 1001 -g docker docker \
+    && echo '%docker ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
+
 #RUN addgroup -g 1000 node \
 #    && adduser -u 1000 -G node -s /bin/sh -D node \
   # gpg keys listed at https://github.com/nodejs/node#release-team
