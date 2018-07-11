@@ -26,10 +26,15 @@ RUN microdnf --enablerepo=rhel-7-server-rpms \
 
 RUN microdnf clean all
     
-RUN addgroup -g 1000 node \
-    && adduser -u 1000 -G node -s /bin/sh -D node \
+RUN groupadd docker \
+    && useradd -r -u 1001 -g docker docker \
+    && echo '%docker ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
+
+#RUN addgroup -g 1000 node \
+#    && adduser -u 1000 -G node -s /bin/sh -D node \
   # gpg keys listed at https://github.com/nodejs/node#release-team
-  && for key in \
+
+RUN for key in \
     94AE36675C464D64BAFA68DD7434390BDBE9B9C5 \
     FD3A5288F042B6850C66B31F09FE44734EB7990E \
     71DCFD284A79C3B38668286BC97EC7A07EDE3FC1 \
@@ -73,9 +78,9 @@ RUN for key in \
   && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/ \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
-  && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz \
-  && apk del .build-deps-yarn
+  && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz
+  # && apk del .build-deps-yarn
 
-USER 1000
+USER docker
 
 CMD [ "node" ]
