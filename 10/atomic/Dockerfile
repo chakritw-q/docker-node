@@ -8,7 +8,7 @@ RUN microdnf update
 
 # Install repos & tools
 RUN microdnf --enablerepo=rhel-7-server-rpms \
-    install -y sudo gcc-c++ g++ gcc libstdc++ libgcc linux-headers make \
+    install -y sudo gcc-c++ gcc libstdc++ libgcc linux-headers make \
     gnupg tar curl wget openssl \
     && wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
     && rpm -ivh epel-release-latest-7.noarch.rpm \
@@ -75,5 +75,7 @@ RUN for key in \
   && ln -s /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
   && rm yarn-v$YARN_VERSION.tar.gz.asc yarn-v$YARN_VERSION.tar.gz \
   && apk del .build-deps-yarn
+
+USER 1000
 
 CMD [ "node" ]
