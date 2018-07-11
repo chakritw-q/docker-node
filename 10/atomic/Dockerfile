@@ -15,7 +15,7 @@ RUN microdnf --enablerepo=rhel-7-server-rpms \
     && wget https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-7-x86_64/pgdg-redhat10-10-2.noarch.rpm \
     && rpm -ivh pgdg-redhat10-10-2.noarch.rpm \
     && microdnf --enablerepo=rhel-7-server-rpms \
-    install -y sudo nano vim curl net-tools traceroute binutils-gold
+    install -y sudo nano vim curl net-tools traceroute
     #python
 
 # Install NodeJS
