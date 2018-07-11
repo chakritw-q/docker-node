@@ -11,12 +11,9 @@ RUN microdnf --enablerepo=rhel-7-server-rpms \
     install -y sudo gcc-c++ gcc libstdc++ libgcc make \
     gnupg tar curl wget openssl \
     && wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm \
-    && rpm -ivh epel-release-latest-7.noarch.rpm \
-    && wget https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-7-x86_64/pgdg-redhat10-10-2.noarch.rpm \
-    && rpm -ivh pgdg-redhat10-10-2.noarch.rpm \
+    # && rpm -ivh epel-release-latest-7.noarch.rpm \
     && microdnf --enablerepo=rhel-7-server-rpms \
-    install -y sudo nano vim curl net-tools traceroute
-    #python
+    install -y sudo nano vim curl net-tools traceroute python
 
 # Install NodeJS
 #RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
