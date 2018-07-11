@@ -22,9 +22,10 @@ RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash - \
     install nodejs
 
 #Install yarn
-RUN curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo \
-    && microdnf --enablerepo=rhel-7-server-rpms \
-    install yarn
+# https://dl.yarnpkg.com/rpm/pubkey.gpg
+#RUN curl -sL https://dl.yarnpkg.com/rpm/yarn.repo | tee /etc/yum.repos.d/yarn.repo \
+#    && microdnf --enablerepo=rhel-7-server-rpms \
+#    install yarn
 
 RUN microdnf clean all
     
