@@ -10,7 +10,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
     
 RUN groupadd --gid 1000 docker \
-    && useradd --uid 1000 --gid docker docker --shell /bin/bash --create-home docker \
+    && useradd --uid 1000 --gid docker --shell /bin/bash --create-home docker docker \
     && echo '%docker ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
 
 #RUN groupadd --gid 1000 node \
