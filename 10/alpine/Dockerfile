@@ -6,12 +6,14 @@ ENV NODE_VERSION ${NODE_MAJOR_VERSION}.6.0
 USER 0
 
 RUN echo "## Installing prerequisites {"; \
+    set -ex; \
     apk update; \
     apk add --no-cache \
     sudo libstdc++ wget curl tar bzip2 gnupg; \
     echo "## }"
     
-RUN addgroup -g 1000 docker && \
+RUN set -ex; \
+    addgroup -g 1000 docker && \
     adduser -u 1000 -G docker -s /bin/sh -D docker; \
     echo '%docker ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
     
@@ -58,7 +60,7 @@ RUN echo "## Installing NodeJS sources"; \
     make install; \
     cd .. \
     rm -Rf "node-v$NODE_VERSION"; \
-    && rm "node-v$NODE_VERSION.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt; \
+    rm "node-v$NODE_VERSION.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt; \
     echo "## }"
 
 ENV YARN_VERSION 1.7.0

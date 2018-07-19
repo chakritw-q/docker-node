@@ -6,10 +6,11 @@ ENV NODE_VERSION ${NODE_MAJOR_VERSION}.6.0
 USER 0
 
 RUN echo "## Installing prerequisites {"; \
+    set -ex; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
     sudo curl netbase wget tar bzip2 gnupg ca-certificates; \
-    rm -rf /var/lib/apt/lists/*; \
+    #rm -rf /var/lib/apt/lists/*; \
     echo "## }"
     
 RUN groupadd --gid 1000 docker && \
