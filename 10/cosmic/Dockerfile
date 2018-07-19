@@ -7,6 +7,8 @@ USER 0
 
 RUN echo "## Installing prerequisites {"; \
     set -ex; \
+    apt-get upgrade; \
+    apt-get dist-upgrade; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
     sudo curl netbase wget tar bzip2 gnupg ca-certificates; \
@@ -19,14 +21,13 @@ RUN groupadd --gid 1000 docker && \
     
 RUN echo "## Installing build tools {"; \
     set -ex; \
-    buildDeps=' \
+    buildDeps=" \
         binutils-gold \
         gcc g++ make patch autoconf automake \
-        libgcc \
-        linux-headers \
-        make \
+        libgcc-7-dev \
+        linux-headers-$(uname -r) \
         python \
-    '; \
+    "; \
     export buildDeps; \
     echo ${buildDeps}; \
     apt-get install -y --no-install-recommends ${buildDeps}; \
