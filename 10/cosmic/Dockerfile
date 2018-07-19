@@ -17,6 +17,7 @@ RUN groupadd --gid 1000 docker && \
     echo '%docker ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
     
 RUN echo "## Installing build tools {"; \
+    /bin/bash -c (\
     export buildDeps = ' \
         binutils-gold \
         gcc g++ make patch autoconf automake \
@@ -27,6 +28,7 @@ RUN echo "## Installing build tools {"; \
     '; \
     echo ${buildDeps}; \
     apt-get install -y --no-install-recommends ${buildDeps}; \
+    ); \
     echo "## }"
     
 RUN echo "## Installing NodeJS ${NODE_MAJOR_VERSION}.x packages for Debian/Ubuntu {"; \
@@ -93,7 +95,7 @@ RUN echo "## Installing Yarn {"; \
     echo "## }"
 
 RUN echo "## Installing Extra tools {"; \
-    apt-get install -y --no-install-recommends nano vim inetutils traceroute; \
+    apt-get install -y --no-install-recommends nano vim inetutils-tools inetutils-traceroute; \
     echo "## }"
 
 RUN echo "## Uninstalling build tools {"; \

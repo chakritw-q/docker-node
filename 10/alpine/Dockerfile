@@ -16,6 +16,7 @@ RUN addgroup -g 1000 docker && \
     echo '%docker ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
     
 RUN echo "## Installing build tools {"; \
+    /bin/bash -c (\
     export buildDeps = ' \
         binutils-gold \
         g++ gcc make \
@@ -25,6 +26,7 @@ RUN echo "## Installing build tools {"; \
     '; \
     echo ${buildDeps}; \
     apk add --no-cache --virtual .build-deps ${buildDeps}; \
+    ); \
     echo "## }"
     
 # gpg keys listed at https://github.com/nodejs/node#release-team
