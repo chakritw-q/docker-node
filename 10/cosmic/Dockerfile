@@ -17,8 +17,8 @@ RUN groupadd --gid 1000 docker && \
     echo '%docker ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
     
 RUN echo "## Installing build tools {"; \
-    /bin/bash -c (\
-    export buildDeps = ' \
+    set -ex; \
+    buildDeps=' \
         binutils-gold \
         gcc g++ make patch autoconf automake \
         libgcc \
@@ -26,9 +26,9 @@ RUN echo "## Installing build tools {"; \
         make \
         python \
     '; \
+    export buildDeps; \
     echo ${buildDeps}; \
     apt-get install -y --no-install-recommends ${buildDeps}; \
-    ); \
     echo "## }"
     
 RUN echo "## Installing NodeJS ${NODE_MAJOR_VERSION}.x packages for Debian/Ubuntu {"; \
