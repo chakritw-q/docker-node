@@ -23,7 +23,7 @@ RUN echo "## Installing build tools {"; \
         linux-headers \
         python \
     '; \
-    echo ${buildDeps};
+    echo ${buildDeps}; \
     apk add --no-cache --virtual .build-deps ${buildDeps}; \
     echo "## }"
     

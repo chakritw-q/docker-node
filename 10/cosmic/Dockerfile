@@ -25,7 +25,7 @@ RUN echo "## Installing build tools {"; \
         make \
         python \
     '; \
-    echo ${buildDeps};
+    echo ${buildDeps}; \
     apt-get install -y --no-install-recommends ${buildDeps}; \
     echo "## }"
     
