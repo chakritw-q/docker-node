@@ -3,10 +3,14 @@ FROM ubuntu:cosmic
 ENV NODE_MAJOR_VERSION 10
 ENV NODE_VERSION ${NODE_MAJOR_VERSION}.6.0
 
+ARG LINUX_HEADERS_VERSION="4.15.0-22"
+
 USER 0
 
 RUN echo "## Installing prerequisites {"; \
     set -ex; \
+    dpkgArch=`dpkg --print-architecture` && \
+    export dpkgArch; \
     apt-get upgrade; \
     apt-get dist-upgrade; \
     apt-get update; \
@@ -22,10 +26,9 @@ RUN groupadd --gid 1000 docker && \
 RUN echo "## Installing build tools {"; \
     set -ex; \
     buildDeps=" \
-        binutils-gold \
-        gcc g++ make patch autoconf automake \
+        gcc g++ make patch autoconf automake binutils \
         libgcc-7-dev \
-        linux-headers-$(uname -r) \
+        linux-headers-${LINUX_HEADERS_VERSION}-generic \
         python \
     "; \
     export buildDeps; \
@@ -55,7 +58,7 @@ RUN echo "## Installing NodeJS ${NODE_MAJOR_VERSION}.x packages for Debian/Ubunt
 #        gpg --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-keys "$key" || \
 #        gpg --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" ; \
 #    done; \
-#    ARCH= && dpkgArch="$(dpkg --print-architecture)" && \
+#    ARCH= && \
 #    case "${dpkgArch##*-}" in \
 #        amd64) ARCH='x64';; \
 #        ppc64el) ARCH='ppc64le';; \

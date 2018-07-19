@@ -20,8 +20,7 @@ RUN set -ex; \
 RUN echo "## Installing build tools {"; \
     set -ex; \
     buildDeps=' \
-        binutils-gold \
-        g++ gcc make \
+        g++ gcc make binutils-gold \
         libgcc \
         linux-headers \
         python \
